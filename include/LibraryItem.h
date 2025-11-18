@@ -24,7 +24,7 @@ class LibraryItem {
         bool isAvailable() const { return available; };
         static int getTotalItems() { return totalItems; };
         
-        void setAvailabiiltiy(bool status) { available = status; };
+         void setAvailable(bool status) { available = status; }
 
         static void initializeStatic() { totalItems = 0; }
 };

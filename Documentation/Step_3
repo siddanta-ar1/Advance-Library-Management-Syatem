@@ -1,0 +1,26 @@
+🚀 Step 3: Operator Overloading & Advanced Features
+Now we'll implement operator overloading and explore advanced C++ features like friend functions and the this pointer.
+
+📁 Files We'll Create/Update
+text
+LibraryManagementSystem/
+├── include/
+│   ├── Book.h           ← Update with operator overloading
+│   ├── Magazine.h       ← Update with operator overloading  
+│   └── Library.h        ← New - Library management class
+├── src/
+│   ├── Book.cpp         ← Update with operator implementations
+│   ├── Magazine.cpp     ← Update with operator implementations
+│   ├── Library.cpp      ← New
+│   └── main.cpp         ← Update with comprehensive testing
+🎯 Step 3 Goals
+Implement operator overloading (Unit 4)
+
+Understand friend functions (Unit 6)
+
+Use the this pointer (Unit 6)
+
+Explore data conversion concepts
+
+Create a Library class to manage collections
+
