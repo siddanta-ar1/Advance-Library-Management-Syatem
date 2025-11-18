@@ -1,0 +1,222 @@
+📚 Step 2 Documentation: Inheritance & Derived Classes
+🎯 Overview
+Step 2 focuses on implementing inheritance - one of the four pillars of Object-Oriented Programming. We create specialized Book and Magazine classes that inherit from our abstract LibraryItem base class.
+
+📁 Files Created/Modified
+text
+LibraryManagementSystem/
+├── include/
+│   ├── Book.h           ✓ New - Book class declaration
+│   └── Magazine.h       ✓ New - Magazine class declaration
+├── src/
+│   ├── Book.cpp         ✓ New - Book class implementation
+│   ├── Magazine.cpp     ✓ New - Magazine class implementation
+│   └── main.cpp         ✓ Updated - Enhanced testing
+🔍 Detailed Code Explanation
+1. Inheritance Syntax & Access Specifiers
+Book.h:
+
+cpp
+class Book : public LibraryItem  // Public inheritance
+Concept: Inheritance & Access Specifiers (Unit 5)
+
+: public LibraryItem - Public inheritance relationship
+
+Public Inheritance:
+
+Base class public members → remain public in derived class
+
+Base class protected members → remain protected in derived class
+
+Base class private members → NOT accessible in derived class
+
+2. Constructor Chains & Initialization
+Book.cpp:
+
+cpp
+Book::Book(const std::string& title, const std::string& author, int year,
+           const std::string& isbn, int pages, const std::string& genre)
+    : LibraryItem(title, author, year),  // Base class constructor call
+      ISBN(isbn), pageCount(pages), genre(genre) {
+Concept: Constructor Chains (Unit 3, Unit 5)
+
+Order of Execution:
+
+Base class constructor (LibraryItem)
+
+Derived class member initializers (ISBN, pageCount, genre)
+
+Derived class constructor body
+
+3. Function Overriding & Virtual Functions
+Book.h:
+
+cpp
+void displayInfo() const override;  // Override keyword
+Concept: Function Overriding & Virtual Functions (Unit 6)
+
+override keyword: Ensures we're actually overriding a base class virtual function
+
+Compile-time check: If base class doesn't have matching virtual function, compiler error
+
+Runtime polymorphism: Different behavior for same function call
+
+4. Destructor Chains
+Book.cpp:
+
+cpp
+Book::~Book() {
+    std::cout << "Book destructor: " << title << std::endl;
+}
+Concept: Destructor Order (Unit 3, Unit 5)
+
+Reverse order of construction:
+
+Derived class destructor (~Book())
+
+Base class destructor (~LibraryItem())
+
+Virtual destructor ensures proper cleanup
+
+🎓 Key OOP Concepts Applied
+1. Inheritance Hierarchy (Unit 5)
+text
+        LibraryItem (Abstract Base Class)
+              ↑
+      ┌───────┴───────┐
+      │               │
+     Book          Magazine
+Base Class: Common interface and data
+
+Derived Classes: Specialized behavior and additional data
+
+2. Polymorphism in Action (Unit 6)
+cpp
+// In main.cpp - same function call, different behaviors
+book1.displayInfo();  // Calls Book::displayInfo()
+mag1.displayInfo();   // Calls Magazine::displayInfo()
+Dynamic Binding: Runtime decision of which function to call
+
+Pure Virtual Function: Forces derived classes to implement their own version
+
+3. Access Control in Inheritance
+cpp
+// In Book::displayInfo()
+std::cout << "Title: " << title;  // Accessing protected member from base class
+protected members accessible in derived classes
+
+private members of base class NOT accessible in derived classes
+
+🔧 Compilation Process
+Header Inclusion Strategy
+cpp
+// Book.h
+#include "LibraryItem.h"  // Include base class header
+
+// main.cpp  
+#include "Book.h"         // Automatically includes LibraryItem.h
+#include "Magazine.h"     // Automatically includes LibraryItem.h
+Forward Declaration: Not needed here since we use concrete inheritance
+
+Header Guards: Prevent multiple inclusions
+
+Linking Dependencies
+text
+LibraryItem.cpp → LibraryItem.o
+     ↑
+Book.cpp → Book.o → library_system
+     ↑
+main.cpp → main.o
+Dependency Chain: Derived classes depend on base class implementation
+
+🧪 Testing & Verification
+Constructor/Destructor Chain Verification
+cpp
+// Expected output pattern:
+LibraryItem created: [Title]    // Base constructor
+Book constructor: [Title]       // Derived constructor
+...
+Book destructor: [Title]        // Derived destructor  
+LibraryItem destroyed: [Title]  // Base destructor
+Inheritance Test Cases
+Base Class Methods: Verify inherited methods work
+
+cpp
+book1.getTitle();      // Inherited from LibraryItem
+book1.isAvailable();   // Inherited from LibraryItem
+Derived Class Methods: Verify specialized methods work
+
+cpp
+book1.getISBN();       // Specific to Book class
+book1.getGenre();      // Specific to Book class
+Polymorphism: Verify correct function overriding
+
+cpp
+book1.displayInfo();   // Calls Book's version
+mag1.displayInfo();    // Calls Magazine's version
+❓ Frequently Asked Questions
+Q1: Why use public inheritance instead of private or protected?
+A:
+
+Public Inheritance: "is-a" relationship (Book is a LibraryItem)
+
+Private Inheritance: "implemented-in-terms-of" relationship (rare)
+
+Protected Inheritance: Even rarer, mainly for implementation details
+
+Q2: What happens if we don't call base class constructor explicitly?
+A: The compiler automatically calls the base class default constructor. If no default constructor exists, you get a compilation error.
+
+Q3: Why is the override keyword important?
+A:
+
+Compiler Checking: Ensures you're actually overriding a virtual function
+
+Code Readability: Clearly indicates intent to override
+
+Prevents Errors: Catches typos or signature mismatches
+
+Q4: What's the exact order of constructor/destructor calls?
+A:
+Construction: Base → Derived Members → Derived Body
+Destruction: Derived Body → Derived Members → Base
+
+⚠️ Common Pitfalls & Solutions
+Pitfall 1: Slicing Problem
+cpp
+// WRONG - object slicing
+LibraryItem item = Book("Title", "Author", 2024, "ISBN", 100, "Genre");
+item.displayInfo();  // Calls LibraryItem::displayInfo() - WRONG!
+
+// CORRECT - use pointers/references
+LibraryItem* item = new Book("Title", "Author", 2024, "ISBN", 100, "Genre");
+item->displayInfo();  // Calls Book::displayInfo() - CORRECT!
+Pitfall 2: Forgetting to Implement Pure Virtual Functions
+cpp
+// ERROR: Cannot instantiate abstract class
+class IncompleteBook : public LibraryItem {
+    // Forgot to implement displayInfo() - COMPILATION ERROR
+};
+📊 Concept Coverage Summary
+Concept	Unit	Implementation
+Public Inheritance	Unit 5	class Book : public LibraryItem
+Constructor Chains	Unit 3,5	Base constructor in initializer list
+Function Overriding	Unit 6	override keyword with virtual functions
+Access Specifiers	Unit 5	protected members in base class
+Polymorphism	Unit 6	Different displayInfo() implementations
+Static Members	Unit 3	totalItems tracking all objects
+✅ Step 2 Completion Checklist
+Created Book class with public inheritance
+
+Created Magazine class with public inheritance
+
+Implemented constructor/destructor chains
+
+Overrode pure virtual function displayInfo()
+
+Tested inheritance relationships
+
+Verified polymorphic behavior
+
+Compiled and ran successfully
+
