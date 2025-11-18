@@ -1,0 +1,9 @@
+USER_DATA_FORMAT_v1.0
+TotalUsers:4
+NextUserId:5
+===BEGIN_USERS===
+User:Alice Johnson,alice@email.com,1
+User:Bob Smith,bob@email.com,2
+User:Carol Davis,carol@email.com,3
+User:one,one,4
+===END_USERS===
