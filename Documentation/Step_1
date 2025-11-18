@@ -1,0 +1,178 @@
+📚 Step 1 Documentation: Library Management System Foundation
+🎯 Overview
+In Step 1, we're setting up the foundational architecture of our Library Management System using core Object-Oriented Programming principles from your syllabus.
+
+📁 Files Created
+text
+LibraryManagementSystem/
+├── include/LibraryItem.h    # Header file with class declaration
+├── src/LibraryItem.cpp      # Implementation file
+└── src/main.cpp            # Test file (to be created)
+🔍 Detailed Code Explanation
+1. LibraryItem.h - Header File Analysis
+cpp
+#ifndef LIBRARYITEM_H
+#define LIBRARYITEM_H
+Purpose: Header guards to prevent multiple inclusions of the same file.
+
+Concept: Preprocessor Directives (Unit 2)
+
+#ifndef (if not defined) checks if LIBRARYITEM_H is not defined
+
+If not defined, it defines it and includes the code
+
+Prevents compilation errors from duplicate declarations
+
+cpp
+protected:
+    std::string title;
+    std::string author;
+    int publicationYear;
+    bool available;
+    static int totalItems;  // Static member
+Concept: Access Specifiers & Static Members (Unit 3)
+
+protected: Accessible within the class and by derived classes
+
+static int totalItems: Class-level variable shared by all instances
+
+Why static? To track total library items across all objects
+
+cpp
+virtual void displayInfo() const = 0;
+Concept: Pure Virtual Functions & Abstract Classes (Unit 6)
+
+virtual: Enables runtime polymorphism
+
+= 0: Makes it pure virtual = class becomes abstract
+
+Why abstract? Cannot create LibraryItem objects directly, only through derived classes
+
+cpp
+virtual ~LibraryItem();
+Concept: Virtual Destructor (Unit 6)
+
+Ensures proper cleanup when deleting objects through base class pointers
+
+Without virtual destructor, derived class destructors might not be called
+
+2. LibraryItem.cpp - Implementation Analysis
+cpp
+int LibraryItem::totalItems = 0;
+Concept: Static Member Initialization (Unit 3)
+
+Static members must be defined outside the class
+
+Initialized to 0 when program starts
+
+cpp
+LibraryItem::LibraryItem() 
+    : title("Unknown"), author("Unknown"), publicationYear(0), available(true) {
+    totalItems++;
+}
+Concept: Constructor & Member Initialization List (Unit 3)
+
+Constructor: Special member function that initializes objects
+
+Member Initialization List: More efficient than assignment in constructor body
+
+totalItems++: Increments class-level counter for every object created
+
+cpp
+LibraryItem::~LibraryItem() {
+    totalItems--;
+}
+Concept: Destructor (Unit 3)
+
+Called automatically when object is destroyed
+
+totalItems--: Decrements counter to maintain accurate count
+
+🎓 Key OOP Concepts Applied
+1. Encapsulation (Unit 1)
+cpp
+private/protected data + public methods = Encapsulation
+Data hiding: Member variables are protected
+
+Controlled access through public getters/setters
+
+2. Abstraction (Unit 1, Unit 6)
+cpp
+virtual void displayInfo() const = 0;  // Hide implementation details
+Abstract class defines what to do, not how to do it
+
+Derived classes will provide specific implementations
+
+3. Static Members (Unit 3)
+cpp
+static int totalItems;  // One copy shared by all objects
+Class-level variable, not instance-level
+
+Tracks global information about the class
+
+🧪 Testing Step 1
+Create a simple test file to verify our foundation:
+
+cpp
+// src/main.cpp (Test File)
+#include <iostream>
+#include "../include/LibraryItem.h"
+
+using namespace std;
+
+int main() {
+    cout << "=== Testing Library Management System Step 1 ===" << endl;
+    
+    // Test static member
+    cout << "Initial total items: " << LibraryItem::getTotalItems() << endl;
+    
+    // Note: We cannot create LibraryItem objects directly because it's abstract
+    // This is intentional - we'll test with derived classes in Step 2
+    
+    cout << "Step 1 completed successfully!" << endl;
+    cout << "Static member working correctly." << endl;
+    
+    return 0;
+}
+🔧 Compilation Instructions
+bash
+# Navigate to your project directory
+cd LibraryManagementSystem
+
+# Compile the files
+g++ -c src/LibraryItem.cpp -o src/LibraryItem.o
+g++ -c src/main.cpp -o src/main.o
+g++ src/LibraryItem.o src/main.o -o library_system
+
+# Run the program
+./library_system
+❓ Review Questions & Answers
+Q1: Why make displayInfo() a pure virtual function?
+A: To enforce that all derived classes must provide their own implementation, ensuring polymorphic behavior and making LibraryItem an abstract base class.
+
+Q2: What's the purpose of the static member totalItems?
+A: It maintains a class-level counter that tracks how many library item objects exist in the entire system, shared across all instances.
+
+Q3: Why declare the destructor as virtual?
+A: When we delete objects through base class pointers, the virtual destructor ensures that both base and derived class destructors are called, preventing memory leaks.
+
+🚀 Next Step Preview
+In Step 2, we'll create:
+
+Derived Classes: Book and Magazine (inheritance)
+
+Constructor/Destructor chains in derived classes
+
+Override the pure virtual function
+
+✅ Step 1 Completion Checklist
+Created LibraryItem.h with proper class declaration
+
+Implemented LibraryItem.cpp with all member functions
+
+Understood abstract classes and pure virtual functions
+
+Grasped static member concept and implementation
+
+Compiled and tested the basic structure
+

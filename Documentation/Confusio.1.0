@@ -1,0 +1,22 @@
+# Step 1: Check files exist
+echo "=== Checking files ==="
+ls src/LibraryItem.cpp
+ls src/main.cpp
+ls include/LibraryItem.h
+
+# Step 2: Compile object files
+echo "=== Compiling object files ==="
+g++ -c src/LibraryItem.cpp -o src/LibraryItem.o
+g++ -c src/main.cpp -o src/main.o
+
+# Step 3: Check object files were created
+echo "=== Checking object files ==="
+ls src/*.o
+
+# Step 4: Link and create executable
+echo "=== Linking ==="
+g++ src/LibraryItem.o src/main.o -o library_system
+
+# Step 5: Run
+echo "=== Running program ==="
+./library_system
