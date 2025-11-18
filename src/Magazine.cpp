@@ -24,3 +24,15 @@ void Magazine::displayInfo() const {
             <<", Available: "<< (available ? "Yes" : "No")
             << std::endl;
 }
+
+bool Magazine::operator==(const Magazine& other) const {
+    return (this->title == other.title) && (this->issueNumber == other.issueNumber);
+}
+
+std::ostream& operator<<(std::ostream& os, const Magazine& magazine) {
+    os<< "Magazine[Title: "<< magazine.title
+    <<", Publisher: "<< magazine.publisher
+    <<", Issue: " <<magazine.issueNumber
+    << "]";
+    return os;
+}

@@ -3,6 +3,7 @@
 
 #include "LibraryItem.h"
 #include <string>
+#include <iostream>
 
 class Magazine : public LibraryItem {
     private:
@@ -22,6 +23,11 @@ class Magazine : public LibraryItem {
         int getIssueNumber() const { return issueNumber;}
         std::string getPublisher() const { return publisher; }
         std::string getFrequency() const { return frequency;}
+
+        bool operator==(const Magazine& other) const;
+        friend std::ostream& operator<<(std::ostream& os, const Magazine& magazine);
+
+        const Magazine* getCurrentObject() const { return this; }
 }; 
 
 

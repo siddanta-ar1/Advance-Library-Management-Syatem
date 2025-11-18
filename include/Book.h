@@ -28,9 +28,25 @@ class Book : public LibraryItem {
         void setPageCount(int pages) { pageCount = pages; };
         void setGenre(const std::string& g ) { genre = g; };
 
+        bool operator==(const Book& other) const; 
+        bool operator!=(const Book& other) const;
+        bool operator<(const Book& other) const;
         
+        Book& operator=(const Book& other);
+
+        friend std::ostream& operator<<(std::ostream& os, const Book& book);
+
+
+        operator std::string() const;
+
+
+        friend bool isClassic(const Book& book);
+
+        Book* getThisPointer() { return this; }
 
 
 };
+
+bool isClassic(const Book& book);
 
 #endif
